@@ -8,6 +8,7 @@ class JavaCiApplicationTests {
 
     @Test
     void contextLoads() {
+        throw new RuntimeException("Test not implemented");
     }
 
 }
