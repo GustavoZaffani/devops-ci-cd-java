@@ -1,8 +1,6 @@
 name: CI/CD Workflow
 
-on:
-  issue_comment:
-    types: [created]
+on: issue_comment
 
 jobs:
   run-tests:
