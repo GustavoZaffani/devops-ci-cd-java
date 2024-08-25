@@ -7,7 +7,6 @@ on:
 jobs:
   run-tests:
     name: PR comment
-    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - run: |
