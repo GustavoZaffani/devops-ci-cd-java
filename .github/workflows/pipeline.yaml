@@ -1,0 +1,38 @@
+name: CI/CD Workflow
+
+on:
+  issue_comment:
+    types: [created]
+
+#on:
+#  pull_request:
+#    branches:
+#      - main
+
+jobs:
+  run-tests:
+    if: contains(github.event.comment.body, '/ok-to-test')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Run tests with maven
+        run: mvn test
+
+      - name: Build with Maven
+        run: mvn clean install -DskipTests
