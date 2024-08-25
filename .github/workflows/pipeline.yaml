@@ -16,7 +16,7 @@ jobs:
         uses: myrotvorets/set-commit-status-action@master
         with:
           sha: ${{ steps.comment-branch.outputs.head_sha }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GB_TOKEN }}
           status: pending
       - name: Checkout code
         uses: actions/checkout@v4
@@ -48,6 +48,6 @@ jobs:
         if: always()
         with:
           sha: ${{ steps.comment-branch.outputs.head_sha }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GB_TOKEN }}
           status: ${{ job.status }}
 
