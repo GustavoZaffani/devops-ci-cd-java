@@ -4,11 +4,6 @@ on:
   issue_comment:
     types: [created]
 
-#on:
-#  pull_request:
-#    branches:
-#      - main
-
 jobs:
   run-tests:
     if: contains(github.event.comment.body, '/ok-to-test')
