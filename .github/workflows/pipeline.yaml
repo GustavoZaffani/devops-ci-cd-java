@@ -1,14 +1,8 @@
 name: CI/CD Workflow
 
 on:
-  pull_request:
-    branches:
-      - main
-
-#
-#on:
-#  issue_comment:
-#    types: [created]
+  issue_comment:
+    types: [created]
 
 jobs:
   run-tests:
