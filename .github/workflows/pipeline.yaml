@@ -69,7 +69,7 @@ jobs:
           context: "Build and Tests"
 
   deploy-sandbox:
-    if: contains(github.event.comment.body, '/ok-to-sandbox') && github.event.pull_request.labels.*.name contains 'build-and-tests:checked'
+    if: contains(github.event.comment.body, '/ok-to-sandbox') && contains(github.event.pull_request.labels.*.name, 'build-and-tests:checked')
     name: Deploy to Sandbox
     runs-on: ubuntu-latest
 
