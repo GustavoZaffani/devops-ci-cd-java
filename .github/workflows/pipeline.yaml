@@ -20,6 +20,7 @@ jobs:
           sha: ${{ steps.pull-request-branch.outputs.head_sha }}
           token: ${{ secrets.GB_TOKEN }}
           status: pending
+          context: "Build and Tests"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -53,6 +54,7 @@ jobs:
           sha: ${{ steps.pull-request-branch.outputs.head_sha }}
           token: ${{ secrets.GB_TOKEN }}
           status: ${{ job.status }}
+          context: "Build and Tests"
 
   build-and-deploy-sandbox:
     if: contains(github.event.comment.body, '/ok-to-sandbox')
@@ -71,6 +73,7 @@ jobs:
           sha: ${{ steps.pull-request-branch.outputs.head_sha }}
           token: ${{ secrets.GB_TOKEN }}
           status: pending
+          context: "Deploy to Sandbox"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -112,4 +115,5 @@ jobs:
           sha: ${{ steps.pull-request-branch.outputs.head_sha }}
           token: ${{ secrets.GB_TOKEN }}
           status: ${{ job.status }}
+          context: "Deploy to Sandbox"
 
