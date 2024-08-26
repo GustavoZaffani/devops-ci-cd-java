@@ -56,10 +56,10 @@ jobs:
           status: ${{ job.status }}
           context: "Build and Tests"
 
-  build-and-deploy-sandbox:
+  deploy-sandbox:
     if: contains(github.event.comment.body, '/ok-to-sandbox')
-#    needs: [build-and-tests]
-    name: Build and Deploy to Sandbox
+    needs: [build-and-tests]
+    name: Deploy to Sandbox
     runs-on: ubuntu-latest
 
     steps:
@@ -85,23 +85,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-
-#      - name: Build with Maven
-#        run: mvn clean package
-
-#      - name: Build Docker image
-#        run: |
-#          docker build -t my-app:${{ github.sha }} .
-#          docker tag my-app:${{ github.sha }} my-dockerhub-username/my-app:${{ github.sha }}
-#
-#      - name: Log in to Docker Hub
-#        env:
-#          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-#        run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-#
-#      - name: Push Docker image
-#        run: docker push my-dockerhub-username/my-app:${{ github.sha }}
 
       - name: Deploy to Sandbox
         run: |
