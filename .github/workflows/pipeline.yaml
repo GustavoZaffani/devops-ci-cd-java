@@ -9,27 +9,29 @@ jobs:
     if: contains(github.event.comment.body, '/ok-to-test')
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR branch
+      - name: Retrieve pull request branch
         uses: xt0rted/pull-request-comment-branch@v1
-        id: comment-branch
+        id: pull-request-branch
+
       - name: Set latest commit status as pending
         uses: myrotvorets/set-commit-status-action@master
         with:
-          sha: ${{ steps.comment-branch.outputs.head_sha }}
+          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
           token: ${{ secrets.GB_TOKEN }}
           status: pending
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.comment-branch.outputs.head_ref }}
+          ref: ${{ steps.pull-request-branch.outputs.head_ref }}
 
-      - name: Setup JDK
+      - name: Setup java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Cache Maven packages
+      - name: Cache maven packages
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
@@ -37,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run tests with maven
+      - name: Run tests
         run: mvn test
 
       - name: Build with Maven
@@ -47,7 +49,7 @@ jobs:
         uses: myrotvorets/set-commit-status-action@master
         if: always()
         with:
-          sha: ${{ steps.comment-branch.outputs.head_sha }}
+          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
           token: ${{ secrets.GB_TOKEN }}
           status: ${{ job.status }}
 
