@@ -5,8 +5,9 @@ on:
     types: [created]
 
 jobs:
-  run-tests:
+  build-and-tests:
     if: contains(github.event.comment.body, '/ok-to-test')
+    name: Build and Tests
     runs-on: ubuntu-latest
     steps:
       - name: Retrieve pull request branch
@@ -55,7 +56,10 @@ jobs:
 
   build-and-deploy-sandbox:
     if: contains(github.event.comment.body, '/ok-to-sandbox')
+    needs: [build_and_test]
+    name: Build and Deploy to Sandbox
     runs-on: ubuntu-latest
+
     steps:
       - name: Retrieve pull request branch
         uses: xt0rted/pull-request-comment-branch@v1
