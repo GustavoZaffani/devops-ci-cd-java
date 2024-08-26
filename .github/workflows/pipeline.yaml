@@ -58,7 +58,6 @@ jobs:
 
   deploy-sandbox:
     if: contains(github.event.comment.body, '/ok-to-sandbox')
-    needs: [build-and-tests]
     name: Deploy to Sandbox
     runs-on: ubuntu-latest
 
