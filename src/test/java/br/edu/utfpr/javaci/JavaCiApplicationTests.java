@@ -8,7 +8,7 @@ class JavaCiApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println("Teste de contextoooooo!");
+        System.out.println("Teste de contextoo!");
 
     }
 
