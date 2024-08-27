@@ -99,7 +99,7 @@ jobs:
           tags: gustavozaffani/java-ci:latest
 
       - name: Deploy to Sandbox
-        uses: appleboy/ssh-action@1.0.3
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SANDBOX_HOST }}
           username: ${{ secrets.SANDBOX_USER }}
