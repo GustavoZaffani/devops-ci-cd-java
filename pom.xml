@@ -10,7 +10,7 @@
     </parent>
     <groupId>br.edu.utfpr</groupId>
     <artifactId>java-ci</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>java-ci</name>
     <description>java-ci</description>
     <url/>
