@@ -106,8 +106,8 @@ jobs:
           key: ${{ secrets.SANDBOX_KEY }}
           script: |
             echo "Deploying to sandbox..."
-            docker rm api -f
-            docker run -d --name api -p 8080:8080 gustavozaffani/java-ci:latest
+            docker rm sandbox -f
+            docker run -d --name sandbox -p 8080:8080 gustavozaffani/java-ci:latest
             echo "Deployed to sandbox!"
 
       - name: Set latest commit status as ${{ job.status }}
