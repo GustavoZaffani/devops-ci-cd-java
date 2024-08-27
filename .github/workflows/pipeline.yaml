@@ -99,9 +99,16 @@ jobs:
           tags: gustavozaffani/java-ci:latest
 
       - name: Deploy to Sandbox
-        run: |
-          # Comando para fazer o deploy na sandbox
-          echo "Deploying to sandbox..."
+        uses: appleboy/ssh-action@1.0.3
+        with:
+          host: ${{ secrets.SANDBOX_HOST }}
+          username: ${{ secrets.SANDBOX_USER }}
+          key: ${{ secrets.SANDBOX_KEY }}
+          script: |
+            echo "Deploying to sandbox..."
+            docker rm sandbox -f
+            docker run -d --name sandbox -p 8080:8080 gustavozaffani/java-ci:latest
+            echo "Deployed to sandbox!"
 
       - name: Set latest commit status as ${{ job.status }}
         uses: myrotvorets/set-commit-status-action@master
