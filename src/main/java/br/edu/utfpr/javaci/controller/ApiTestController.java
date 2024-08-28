@@ -10,6 +10,6 @@ public class ApiTestController {
 
     @GetMapping
     public String test() {
-        return "Teste de API. Porque nao atualiza??????? Heinnnn";
+        return "Teste de API.";
     }
 }
