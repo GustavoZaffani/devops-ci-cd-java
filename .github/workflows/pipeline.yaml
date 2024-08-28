@@ -16,14 +16,14 @@ jobs:
       - name: Retrieve pull request branch
         uses: xt0rted/pull-request-comment-branch@v1
         id: pull-request-branch
-#
-#      - name: Set latest commit status as pending
-#        uses: myrotvorets/set-commit-status-action@master
-#        with:
-#          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
-#          token: ${{ secrets.GB_TOKEN }}
-#          status: pending
-#          context: "Build and Tests"
+
+      - name: Set latest commit status as pending
+        uses: myrotvorets/set-commit-status-action@master
+        with:
+          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
+          token: ${{ secrets.GB_TOKEN }}
+          status: pending
+          context: "Build and Tests"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -50,14 +50,14 @@ jobs:
       - name: Build with Maven
         run: mvn clean install -DskipTests
 
-#      - name: Set latest commit status as ${{ job.status }}
-#        uses: myrotvorets/set-commit-status-action@master
-#        if: always()
-#        with:
-#          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
-#          token: ${{ secrets.GB_TOKEN }}
-#          status: ${{ job.status }}
-#          context: "Build and Tests"
+      - name: Set latest commit status as ${{ job.status }}
+        uses: myrotvorets/set-commit-status-action@master
+        if: always()
+        with:
+          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
+          token: ${{ secrets.GB_TOKEN }}
+          status: ${{ job.status }}
+          context: "Build and Tests"
 
   docker-build:
     if: contains(github.event.comment.body, '/ok-to-sandbox')
