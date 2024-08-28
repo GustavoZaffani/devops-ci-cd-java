@@ -8,8 +8,7 @@ class JavaCiApplicationTests {
 
     @Test
     void contextLoads() {
-        throw new RuntimeException("Teste de contexto falhou!");
-//        System.out.println("Teste de contextoo!");
+        System.out.println("Teste de contextoo!");
 
     }
 
