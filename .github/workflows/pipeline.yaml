@@ -109,6 +109,7 @@ jobs:
           script: |
             echo "Deploying to sandbox..."
             docker rm sandbox -f
+            docker pull gustavozaffani/java-ci:latest
             docker run -d --name sandbox -p 8080:8080 gustavozaffani/java-ci:latest
             echo "Deployed to sandbox!"
 
@@ -136,6 +137,7 @@ jobs:
           script: |
             echo "Deploying to production..."
             docker rm production -f
+            docker pull gustavozaffani/java-ci:latest
             docker run -d --name production -p 18080:8080 gustavozaffani/java-ci:latest
             echo "Deployed to production!"
 
