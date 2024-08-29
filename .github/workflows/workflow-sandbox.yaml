@@ -1,0 +1,46 @@
+name: CD Sandbox
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  deploy-sandbox:
+    if: contains(github.event.comment.body, '/ok-to-sandbox')
+    name: Deploy to Sandbox
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Retrieve pull request branch
+        uses: xt0rted/pull-request-comment-branch@v1
+        id: deploy-sandbox-branch
+
+      - name: Set latest commit status as pending
+        uses: myrotvorets/set-commit-status-action@master
+        with:
+          sha: ${{ steps.deploy-sandbox-branch.outputs.head_sha }}
+          token: ${{ secrets.GB_TOKEN }}
+          status: pending
+          context: "Deploy to Sandbox"
+
+      - name: Deploy to Sandbox
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SANDBOX_HOST }}
+          username: ${{ secrets.SANDBOX_USER }}
+          key: ${{ secrets.SANDBOX_KEY }}
+          script: |
+            echo "Deploying to sandbox..."
+            docker rm sandbox -f
+            docker pull ${{ secrets.DOCKER_IMAGE }}
+            docker run -d --name sandbox -p 8080:8080 ${{ secrets.DOCKER_IMAGE }}
+            echo "Deployed to sandbox!"
+
+      - name: Set latest commit status as ${{ job.status }}
+        uses: myrotvorets/set-commit-status-action@master
+        if: always()
+        with:
+          sha: ${{ steps.deploy-sandbox-branch.outputs.head_sha }}
+          token: ${{ secrets.GB_TOKEN }}
+          status: ${{ job.status }}
+          context: "Deploy to Sandbox"
