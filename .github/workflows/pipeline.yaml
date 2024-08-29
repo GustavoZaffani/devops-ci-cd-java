@@ -49,11 +49,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Build with Maven
+        run: mvn clean install -DskipTests
+
       - name: Run tests
         run: mvn test
 
-      - name: Build with Maven
-        run: mvn clean install -DskipTests
+      - name: Generate Jacoco report
+        run: mvn jacoco:report
 
       - name: Sonar scanner
         env:
@@ -67,6 +70,7 @@ jobs:
           -Dsonar.pullrequest.branch=${{ steps.pull-request-branch.outputs.head_ref }} \
           -Dsonar.pullrequest.base=${{ steps.pull-request-branch.outputs.base_ref }} \
           -Dsonar.github.repository=${{ github.repository }}
+          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
       - name: Set latest commit status as ${{ job.status }}
         uses: myrotvorets/set-commit-status-action@master
