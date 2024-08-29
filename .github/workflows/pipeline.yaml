@@ -57,7 +57,12 @@ jobs:
         run: | 
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-          -Dsonar.branch.name=${{ steps.pull-request-branch.outputs.head_ref }}
+          -Dsonar.branch.name=${{ steps.pull-request-branch.outputs.head_ref }} \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+          -Dsonar.pullrequest.branch=${{ steps.pull-request-branch.outputs.head_ref }} \
+          -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
+          -Dsonar.github.repository=${{ github.repository }}
 
       - name: Set latest commit status as ${{ job.status }}
         uses: myrotvorets/set-commit-status-action@master
