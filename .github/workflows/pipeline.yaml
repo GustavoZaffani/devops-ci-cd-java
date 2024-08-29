@@ -4,31 +4,31 @@ on:
   issue_comment:
     types: [created]
   pull_request:
-    types: [ closed ]
+    branches:
+      - main
 
 jobs:
   build-and-tests:
-    if: contains(github.event.comment.body, '/ok-to-test')
     name: Build and Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: Retrieve pull request branch
-        uses: xt0rted/pull-request-comment-branch@v1
-        id: pull-request-branch
-
-      - name: Set latest commit status as pending
-        uses: myrotvorets/set-commit-status-action@master
-        with:
-          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
-          token: ${{ secrets.GB_TOKEN }}
-          status: pending
-          context: "Build and Tests"
+#      - name: Retrieve pull request branch
+#        uses: xt0rted/pull-request-comment-branch@v1
+#        id: pull-request-branch
+#
+#      - name: Set latest commit status as pending
+#        uses: myrotvorets/set-commit-status-action@master
+#        with:
+#          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
+#          token: ${{ secrets.GB_TOKEN }}
+#          status: pending
+#          context: "Build and Tests"
 
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.pull-request-branch.outputs.head_ref }}
+#        with:
+#          ref: ${{ steps.pull-request-branch.outputs.head_ref }}
 
       - name: Setup java
         uses: actions/setup-java@v3
@@ -61,20 +61,20 @@ jobs:
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
           -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.pullrequest.key=${{ github.event.number }} \
-          -Dsonar.pullrequest.branch=${{ steps.pull-request-branch.outputs.head_ref }} \
-          -Dsonar.pullrequest.base=${{ steps.pull-request-branch.outputs.base_ref }} \
+          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+          -Dsonar.pullrequest.branch=${{ github.head_ref }} \
+          -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
           -Dsonar.github.repository=${{ github.repository }}
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
-      - name: Set latest commit status as ${{ job.status }}
-        uses: myrotvorets/set-commit-status-action@master
-        if: always()
-        with:
-          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
-          token: ${{ secrets.GB_TOKEN }}
-          status: ${{ job.status }}
-          context: "Build and Tests"
+#      - name: Set latest commit status as ${{ job.status }}
+#        uses: myrotvorets/set-commit-status-action@master
+#        if: always()
+#        with:
+#          sha: ${{ steps.pull-request-branch.outputs.head_sha }}
+#          token: ${{ secrets.GB_TOKEN }}
+#          status: ${{ job.status }}
+#          context: "Build and Tests"
 
   docker-build:
     if: contains(github.event.comment.body, '/ok-to-sandbox')
