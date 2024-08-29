@@ -1,14 +1,19 @@
 name: CI/CD Workflow
 
 on:
-  issue_comment:
-    types: [created]
   pull_request:
-    types: [ closed ]
+    branches:
+      - main
+
+#on:
+#  issue_comment:
+#    types: [created]
+#  pull_request:
+#    types: [ closed ]
 
 jobs:
   build-and-tests:
-    if: contains(github.event.comment.body, '/ok-to-test')
+#    if: contains(github.event.comment.body, '/ok-to-test')
     name: Build and Tests
     runs-on: ubuntu-latest
 
