@@ -8,7 +8,6 @@ jobs:
   deploy-sandbox:
     if: contains(github.event.comment.body, '/ok-to-sandbox')
     name: Deploy to Sandbox
-    needs: docker-build
     runs-on: ubuntu-latest
 
     steps:
