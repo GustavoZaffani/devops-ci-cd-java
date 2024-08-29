@@ -63,7 +63,7 @@ jobs:
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
           -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.pullrequest.key=${{ steps.pull-request-branch.outputs.number }} \
+          -Dsonar.pullrequest.key=${{ github.event.number }} \
           -Dsonar.pullrequest.branch=${{ steps.pull-request-branch.outputs.head_ref }} \
           -Dsonar.pullrequest.base=${{ steps.pull-request-branch.outputs.base_ref }} \
           -Dsonar.github.repository=${{ github.repository }}
