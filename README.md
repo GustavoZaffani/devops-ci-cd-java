@@ -24,10 +24,10 @@ Foram criados 3 arquivos `.yaml` para o fluxo de CI/CD. Sendo eles:
     - Realiza o build da imagem Docker e publica no Dockerhub.
 > **Observação:** Esta etapa é executada a cada push no repositório. 
 
-2. **workflox-sandbox.yaml**
+2. **workflow-sandbox.yaml**
     - Realiza o deploy em um ambiente de sandbox para testes.
 > **Observação:** Esta etapa de deploy para sandbox é realizada apenas quando realizado um comentário no pull request com a palavra-chave **/ok-to-sandbox**.
 
-3. **Deploy para Produção**
-    - Realiza o deploy da imagem Docker em um ambiente de produção quando o pull request é mesclado.
+3. **workflow-prod.yaml**
+   - Realiza o deploy no ambiente de produção.
 > **Observação:** Esta etapa é realizada automaticamente quando o pull request é mesclado.
