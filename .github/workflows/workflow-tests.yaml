@@ -61,6 +61,7 @@ jobs:
             -Dsonar.organization=gustavozaffani
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            -Dsonar.java.binaries=target/classes
 
   docker-build:
     name: Docker build
