@@ -49,7 +49,8 @@ jobs:
           -Dsonar.pullrequest.branch=${{ github.head_ref }} \
           -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
           -Dsonar.github.repository=${{ github.repository }} \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+          -Dsonar.scm.provider=git
 
   docker-build:
     name: Docker build
