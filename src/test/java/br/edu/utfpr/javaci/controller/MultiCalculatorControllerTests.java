@@ -38,7 +38,7 @@ class MultiCalculatorControllerTests {
             name = "[{index}] when call currencyConverter with request {0}, the result must be equal {1}")
     @MethodSource("provideValuesConverter")
     void testCurrencyConverter(CurrencyConverterRequestDTO request, BigDecimal result) throws Exception {
-        mockMvc.perform(post("/api/calculator/currency/v3")
+        mockMvc.perform(post("/api/calculator/currency")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(request)))
                 .andExpect(status().isOk())
