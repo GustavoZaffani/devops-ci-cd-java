@@ -52,19 +52,7 @@ jobs:
           -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
           -Dsonar.github.repository=${{ github.repository }} \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=gustavozaffani
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-            -Dsonar.java.binaries=target/classes
-            -Dsonar.exclusions=src/test/java/**/*
+          -Dsonar.scm.provider=git
 
   docker-build:
     name: Docker build
