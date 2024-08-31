@@ -16,10 +16,9 @@ public class MultiCalculatorController {
 
     private final CurrencyConverterService currencyConverterService;
 
-    @PostMapping("/currency/v3")
+    @PostMapping("/currency")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, Object> currencyConverter(@RequestBody CurrencyConverterRequestDTO request) {
-
         return currencyConverterService.convert(request);
     }
 }
